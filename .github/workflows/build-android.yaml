@@ -42,7 +42,7 @@ jobs:
         name: Sign APK
         id: sign_app
         with:
-          releaseDirectory: sync2/src-cordova/platforms/android/app/build/outputs/apk/release/
+          releaseDirectory: dist/cordova/android/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}

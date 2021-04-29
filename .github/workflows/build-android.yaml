@@ -15,6 +15,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
+      
+      - name: Install libs on ubuntu
+        run: sudo apt install -y libusb-1.0-0-dev libudev-dev
 
       - name: Cache Node.js modules
         uses: actions/cache@v2

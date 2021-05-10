@@ -48,7 +48,13 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - uses: actions/upload-artifact@v2
+      - name: Rename file
+        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} dist/cordova/android/apk/release/Sync2-android-${{github.event.release.tag_name}}}.apk
+
+      - name: Upload released files
+        uses: softprops/action-gh-release@v1
         with:
-          name: Signed app bundle
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          files: |
+            dist/cordova/android/apk/release/Sync2-android-${{github.event.release.tag_name}}}.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

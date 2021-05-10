@@ -54,6 +54,7 @@ jobs:
       - name: Upload released files
         uses: softprops/action-gh-release@v1
         with:
+          draft: true
           files: |
             dist/cordova/android/apk/release/Sync2-android-${{github.event.release.tag_name}}}.apk
         env:

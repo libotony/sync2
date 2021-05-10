@@ -51,14 +51,18 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Setup output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
       - name: Rename file
-        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} dist/cordova/android/apk/release/Sync2-android-${{github.event.release.tag_name}}}.apk
+        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}.apk
 
       - name: Upload released files
         uses: softprops/action-gh-release@v1
         with:
           draft: true
           files: |
-            dist/cordova/android/apk/release/Sync2-android-${{github.event.release.tag_name}}}.apk
+            dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

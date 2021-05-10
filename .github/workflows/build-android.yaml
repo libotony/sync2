@@ -1,6 +1,9 @@
 name: Build android version
 
 on:
+  push:
+    tags:
+    - 'v*'
   workflow_dispatch:
 
 env:

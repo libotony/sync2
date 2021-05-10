@@ -53,7 +53,7 @@ jobs:
 
       - name: Setup output
         id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/v*/}
 
       - name: Rename file
         run: mv ${{steps.sign_app.outputs.signedReleaseFile}} dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}.apk

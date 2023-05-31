@@ -20,7 +20,6 @@ jobs:
 
       - name: Copy built aab file
         run: |
-          rm -r dist/android
           mkdir -p dist/android
           cp dist/cordova/android/bundle/release/*.aab dist/android/
 

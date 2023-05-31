@@ -18,14 +18,23 @@ jobs:
       - name: Build bundle
         run: npx quasar build -m android -- -- --packageType=bundle
 
+      - name: Copy built aab file
+        run: |
+          rm -r dist/android
+          mkdir -p dist/android
+          cp dist/cordova/android/bundle/release/*.aab dist/android/
+
       - name: Build apk
         run: npx quasar build -m android -- -- --packageType=apk
+
+      - name: Copy built apk file
+        run: cp dist/cordova/android/apk/release/*.apk dist/android/
         
       - uses: r0adkll/sign-android-release@v1
         name: Sign APK
         id: sign_apk
         with:
-          releaseDirectory: dist/cordova/android/apk/release
+          releaseDirectory: dist/android
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
@@ -37,7 +46,7 @@ jobs:
         name: Sign Bundle
         id: sign_bundle
         with:
-          releaseDirectory: dist/cordova/android/bundle/release
+          releaseDirectory: dist/android
           signingKeyBase64: ${{ secrets.UPLOAD_KEY }}
           alias: ${{ secrets.UPLOAD_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.UPLOAD_KEY_STORE_PASSWORD }}
@@ -50,18 +59,18 @@ jobs:
         run: echo "tag=v2.0.8" >> $GITHUB_OUTPUT
           
       - name: Rename apk file
-        run: mv ${{steps.sign_apk.outputs.signedReleaseFile}} dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}.apk
+        run: mv ${{steps.sign_apk.outputs.signedReleaseFile}} dist/android/Sync2-android-${{ steps.vars.outputs.tag }}.apk
       
       - name: Rename bundle file
-        run: mv ${{steps.sign_bundle.outputs.signedReleaseFile}} dist/cordova/android/bundle/release/Sync2-android-${{ steps.vars.outputs.tag }}.aab
+        run: mv ${{steps.sign_bundle.outputs.signedReleaseFile}} dist/android/Sync2-android-${{ steps.vars.outputs.tag }}.aab
 
       - name: Calculate checksum of output file
-        run: shasum -a 512 dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}.apk | cut -f1 -d\ | xxd -r -p | base64 -b 0 > dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}-apk-SHASUM
+        run: shasum -a 512 dist/android/Sync2-android-${{ steps.vars.outputs.tag }}.apk | cut -f1 -d\ | xxd -r -p | base64 -b 0 > dist/android/Sync2-android-${{ steps.vars.outputs.tag }}-apk-SHASUM
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           path: |
-            dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}.apk
-            dist/cordova/android/apk/release/Sync2-android-${{ steps.vars.outputs.tag }}-apk-SHASUM
-            dist/cordova/android/bundle/release/Sync2-android-${{ steps.vars.outputs.tag }}.aab
+            dist/android/Sync2-android-${{ steps.vars.outputs.tag }}.apk
+            dist/android/Sync2-android-${{ steps.vars.outputs.tag }}-apk-SHASUM
+            dist/android/Sync2-android-${{ steps.vars.outputs.tag }}.aab

@@ -12,16 +12,18 @@ jobs:
     runs-on: self_mac_11.0
     steps:
       - uses: actions/checkout@v3
-        
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '16'
+
+      - name: Setup cordova env
+        run: |
+          source ~/.nvm/nvm.sh
+          cd src-cordova
+          npm ci
+          cd ..
 
       - name: Get node version
         run: |
-          source ~/.nvm/nvm.sh
-          nvm ls
-          which node
+          node --version
+          whicn node
 
       # - name: Setup cordova env
       #   run: |

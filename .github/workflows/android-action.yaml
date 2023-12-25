@@ -18,12 +18,12 @@ jobs:
           source ~/.nvm/nvm.sh
           cd src-cordova
           npm ci
-          cd ..
 
       - name: Get node version
         run: |
           node --version
           which node
+          pwd
 
       # - name: Setup cordova env
       #   run: |
@@ -40,8 +40,8 @@ jobs:
       #     node --version
       #     whicn node
 
-      # - name: Install Dependencies
-      #   run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
       # - name: Build bundle
       #   run: npx quasar build -m android -- -- --packageType=bundle

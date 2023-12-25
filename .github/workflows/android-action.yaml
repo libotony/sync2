@@ -19,37 +19,22 @@ jobs:
           cd src-cordova
           npm ci
 
-      - name: Get node version
-        run: |
-          node --version
-          which node
-          pwd
-
-      # - name: Setup cordova env
-      #   run: |
-      #     cd src-cordova
-      #     npm ci
-      #     cd ..
-
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '14'
-
       # - name: Get node version
       #   run: |
       #     node --version
-      #     whicn node
+      #     which node
+      #     pwd
 
       - name: Install Dependencies
         run: npm ci
 
-      # - name: Build bundle
-      #   run: npx quasar build -m android -- -- --packageType=bundle
+      - name: Build bundle
+        run: npx quasar build -m android -- -- --packageType=bundle
 
-      # - name: Copy built aab file
-      #   run: |
-      #     mkdir -p dist/android/bundle
-      #     cp dist/cordova/android/bundle/release/*.aab dist/android/bundle/
+      - name: Copy built aab file
+        run: |
+          mkdir -p dist/android/bundle
+          cp dist/cordova/android/bundle/release/*.aab dist/android/bundle/
 
       # - name: Build apk
       #   run: npx quasar build -m android -- -- --packageType=apk

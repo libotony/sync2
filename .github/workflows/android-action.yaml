@@ -96,4 +96,4 @@ jobs:
         with:
           path: | 
             dist/android/bundle/Sync2-android-${{ steps.vars.outputs.tag }}.aab
-            dist/android/bundle/Sync2-android-${{ steps.vars.outputs.tag }}.apk
+            dist/android/apk/Sync2-android-${{ steps.vars.outputs.tag }}.apk

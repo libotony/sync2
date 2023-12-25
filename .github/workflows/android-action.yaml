@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup cordova env
-        run: |
-          source ~/.nvm/nvm.sh
-          cd src-cordova
-          npm ci
+      # - name: Setup cordova env
+      #   run: |
+      #     source ~/.nvm/nvm.sh
+      #     cd src-cordova
+      #     npm ci
 
       # - name: Get node version
       #   run: |

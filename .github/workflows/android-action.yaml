@@ -21,7 +21,12 @@ jobs:
         run: node --version
 
       - name: Setup cordova env
-        run: cd src-cordova && npm ci && npx cordova prepare && cd ..
+        run: |
+          cd src-cordova
+          npm ci
+          pwd
+          npx cordova prepare 
+          cd ..
 
       - uses: actions/setup-node@v3
         with:

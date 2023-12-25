@@ -23,7 +23,7 @@ jobs:
       - name: Get node version
         run: |
           node --version
-          whicn node
+          which node
 
       # - name: Setup cordova env
       #   run: |

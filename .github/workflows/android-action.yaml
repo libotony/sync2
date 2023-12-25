@@ -19,6 +19,7 @@ jobs:
 
       - name: Get node version
         run: |
+          source ~/.nvm/nvm.sh
           nvm ls
           which node
 
